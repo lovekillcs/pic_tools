@@ -38,19 +38,21 @@ def loadFiles(path):
     for f in files:
         if '.txt' in f:
             picPath = f.replace('txt', 'png')
-            savePath = f.replace('.txt', '/')
-            if not os.path.exists(savePath):
-                os.makedirs(savePath)
-            img = Image.open(picPath)
-            datas = analyzeMeta(f)
-            for data in datas:
-                cutPic(img,
-                       data.x, data.y, data.width, data.height,
-                       data.paddingLeft,
-                       data.paddingTop,
-                       data.paddingLeft + data.paddingRight + data.width,
-                       data.paddingTop + data.paddingBottom + data.height,
-                       savePath+data.name+'.png')
+            if os.path.isfile(picPath):
+                savePath = f.replace('.txt', '/')
+                if not os.path.exists(savePath):
+                    os.makedirs(savePath)
+                print picPath
+                img = Image.open(picPath)
+                datas = analyzeMeta(f)
+                for data in datas:
+                    cutPic(img,
+                        data.x, data.y, data.width, data.height,
+                        data.paddingLeft,
+                        data.paddingTop,
+                        data.paddingLeft + data.paddingRight + data.width,
+                        data.paddingTop + data.paddingBottom + data.height,
+                        savePath+data.name+'.png')
 
 
 def analyzeMeta(path):
